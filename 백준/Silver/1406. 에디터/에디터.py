@@ -4,13 +4,14 @@ left = list(input().rstrip())
 right = []
 n = int(input())
 for i in range(n):
-    order = list(input().rstrip().split())
-    if order[0] == "L" and left:
+    command = input().split()
+    if command[0] == "L" and left:
         right.append(left.pop())
-    elif order[0] == "D" and right:
+    elif command[0] == "D" and right:
         left.append(right.pop())
-    elif order[0] == "B" and left:
+    elif command[0] == "B" and left:
         left.pop()
-    elif order[0] == "P":
-        left.append(order[1])
-print(*(left+right[::-1]), sep = "")
+    elif command[0] == "P":
+        left.append(command[1])
+right.reverse()
+print("".join(left+right))

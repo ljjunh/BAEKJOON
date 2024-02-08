@@ -1,5 +1,3 @@
-res = [-1] * 26
-for idx, v in enumerate(input()):
-    if res[ord(v)-97] == -1:
-        res[ord(v)-97] = idx
-print(*res)
+s = input()
+for i in range(97, 123):
+    print(s.find(chr(i)), end = " ")

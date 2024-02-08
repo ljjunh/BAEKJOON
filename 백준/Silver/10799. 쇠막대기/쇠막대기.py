@@ -1,14 +1,17 @@
-string = input()
+arr = input()
 stack = []
-res = 0
-for i in range(len(string)):
-    if string[i] == "(":
+cnt = 0
+temp = False
+for i in arr:
+    if i == "(":
         stack.append(i)
-    elif string[i] == ")":
-        if stack[-1] == i-1:
+        temp = True
+    elif i == ")":
+        if temp == True:
             stack.pop()
-            res += len(stack)
+            cnt += len(stack)
+            temp = False
         else:
             stack.pop()
-            res += 1
-print(res)
+            cnt += 1 
+print(cnt)

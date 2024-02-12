@@ -3,11 +3,10 @@ def gcd(a, b):
         return a
     return gcd(b, a%b)
 
-t = int(input())
-for i in range(t):
-    res = 0
+for _ in range(int(input())):
     arr = list(map(int, input().split()))
-    for j in range(1, len(arr)-1):
-        for k in range(j+1, len(arr)):
-            res += gcd(arr[k], arr[j])
-    print(res)
+    cnt = 0
+    for i in range(1, arr[0]):
+        for j in range(i+1, arr[0]+1):
+            cnt += gcd(arr[i], arr[j])
+    print(cnt)

@@ -1,17 +1,10 @@
-def calc(n, v):
-    ans = 0
-    i = v
-    while i <= n:
-        ans += n//i
-        i *= v
-    return ans
-two = 0
-five = 0
+def count(n, v):
+    cnt = 0
+    while n >= v:
+        cnt += n//v
+        n = n // v
+    return cnt
 n, m = map(int, input().split())
-two += calc(n, 2)
-two -= calc(n-m, 2)
-two -= calc(m, 2)
-five += calc(n, 5)
-five -= calc(n-m, 5)
-five -= calc(m, 5)
+two = count(n, 2) - count(n-m, 2) - count(m, 2)
+five = count(n, 5) - count(n-m, 5) - count(m, 5)
 print(min(two, five))

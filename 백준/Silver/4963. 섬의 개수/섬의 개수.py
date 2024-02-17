@@ -1,37 +1,30 @@
 import sys
-sys.setrecursionlimit(10**6)
+sys.setrecursionlimit(10 ** 6)
 input = sys.stdin.readline
 
-dx = [-1, 1, 0, 0, -1, -1, 1, 1]
-dy = [0, 0, -1, 1, -1, 1, -1, 1]
+MAX = 50 + 10
+dx = [-1, 1, 0, 0, -1, 1, -1, 1]
+dy = [0, 0, -1, 1, -1, -1, 1, 1]
 
 def dfs(x, y):
-    visited[x][y] = True
-    
+    graph[x][y] = 0
     for i in range(8):
         nx, ny = x + dx[i], y + dy[i]
-        if not visited[nx][ny] and graph[nx][ny]:
+        if graph[nx][ny]:
             dfs(nx, ny)
-
-
 while True:
-    W, H = map(int, input().split())
-    if W == 0 or H == 0:
-        break
-    MAX = 50 + 10
-    graph = [[False] * MAX for _ in range(MAX)]
-    visited = [[False] * MAX for _ in range(MAX)]
+    w, h = map(int, input().split())
     answer = 0
-    for i in range(1, H + 1):
+    if w == 0 or h == 0:
+        break
+    graph = [[False] * MAX for _ in range(MAX)]
+    for i in range(1, h+1):
         s = list(map(int, input().split()))
-        for j in range(1, W+1):
-            graph[i][j] = (s[j - 1] == 1)
-    for i in range(1, H + 1):
-        for j in range(1, W + 1):
-            if not visited[i][j] and graph[i][j]:
+        for j in range(1, w+1):
+            graph[i][j] = s[j-1]
+    for i in range(1, h+1):
+        for j in range(1, w+1):
+            if graph[i][j]:
                 dfs(i, j)
                 answer += 1
-    
-    print(answer)    
-            
-        
+    print(answer)

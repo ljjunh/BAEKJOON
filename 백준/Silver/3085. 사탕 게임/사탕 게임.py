@@ -25,12 +25,12 @@ arr = [list(input().rstrip()) for _ in range(N)]
 ans = 1
 for i in range(N):
     for j in range(N):
-        if j + 1 < N:
+        if j + 1 < N and arr[i][j] != arr[i][j+1]:
             arr[i][j], arr[i][j+1] = arr[i][j+1], arr[i][j]
             temp = chk(arr)
             ans = max(temp, ans)
             arr[i][j], arr[i][j+1] = arr[i][j+1], arr[i][j]
-        if i + 1 < N:
+        if i + 1 < N and arr[i][j] != arr[i+1][j]:
             arr[i][j], arr[i+1][j] = arr[i+1][j], arr[i][j]
             temp = chk(arr)
             ans = max(temp, ans)

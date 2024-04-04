@@ -1,39 +1,34 @@
 import sys
-sys.setrecursionlimit(10 ** 6)
 input = sys.stdin.readline
+from collections import deque
 
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
-
-def dfs(x, y, t):
-    visited[x][y] = True
-    for i in range(4):
-        nx, ny = x + dx[i], y + dy[i]
-        if not visited[nx][ny] and graph[nx][ny] > t:
-            dfs(nx, ny, t)
-    
+def bfs(x, y, h):
+    global visited
+    visited[x][y] = 1
+    q = deque()
+    q.append((x, y))
+    while q:
+        cx, cy = q.popleft()
+        for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+            nx, ny = cx+dx, cy+dy
+            if 0 <= nx < N and 0 <= ny < N and not visited[nx][ny] and graph[nx][ny] > h:
+                q.append((nx, ny))
+                visited[nx][ny] = 1
 N = int(input())
-MAX = 100 + 10
-graph = [[0] * MAX for _ in range(MAX)]
-visited = [[False] * MAX for _ in range(MAX)]
-min_num = 1
+graph = [list(map(int, input().split())) for _ in range(N)]
 max_num = 0
-res = 1
-for i in range(1, N + 1):
-    s = list(map(int, input().split()))
-    for j in range(1, N + 1):
-        graph[i][j] = s[j-1]
-        if graph[i][j] > max_num:
-            max_num = graph[i][j]
-        
-for t in range(min_num, max_num + 1):
+ans = 1
+for i in range(N):
+    max_num = max(max_num, max(graph[i]))
+
+for x in range(1, max_num+1):
     cnt = 0
-    for i in range(1, N + 1):
-        for j in range(1, N + 1):
-            if graph[i][j] > t and not visited[i][j]:
-                dfs(i, j, t)
-                cnt += 1
-    visited = [[False] * MAX for _ in range(MAX)]
-    if res < cnt:
-        res = cnt
-print(res)
+    visited = [[0] * N for _ in range(N)]
+    for i in range(N):
+        for j in range(N):
+            if not visited[i][j] and graph[i][j] > x:
+                bfs(i, j, x)
+                cnt += 1 
+    ans = max(ans, cnt)
+print(ans)
+
